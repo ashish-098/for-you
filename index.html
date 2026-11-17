@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>.
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>For You 💗</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#ffe3f0;--bg2:#e6d9ff;--ink:#5a2a54;--card:rgba(255,255,255,.6);--bd:rgba(255,255,255,.8);--a:#ff5c9d;--b:#b388ff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#2c1240;--bg2:#161033;--ink:#ffe9f4;--card:rgba(255,255,255,.1);--bd:rgba(255,255,255,.2)}}
+:root[data-theme="dark"]{--bg1:#2c1240;--bg2:#161033;--ink:#ffe9f4;--card:rgba(255,255,255,.1);--bd:rgba(255,255,255,.2)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{height:100%;margin:0}
+body{font-family:'Quicksand','Poppins',system-ui,sans-serif;color:var(--ink);background:linear-gradient(160deg,var(--bg1),var(--bg2));overflow:hidden;-webkit-tap-highlight-color:transparent}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:3;overflow:hidden}
+#app{position:relative;height:100%;z-index:2}
+.screen{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;padding:84px 18px 24px;overflow-y:auto;text-align:center}
+.screen.active{display:flex;animation:in .9s ease both}
+@keyframes in{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+#s0{justify-content:flex-end;padding-top:24px}
+h1,h2{font-family:'Pacifico',cursive;font-weight:400;margin:.2em 0;line-height:1.25}
+h1{font-size:clamp(2rem,9vw,3.2rem)}h2{font-size:clamp(1.5rem,6.5vw,2.2rem)}
+p{font-size:1.05rem;line-height:1.65;margin:.6em 0;max-width:34rem}
+.card{background:var(--card);border:1px solid var(--bd);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:26px;padding:22px 20px;max-width:34rem;width:100%;box-shadow:0 10px 40px rgba(179,136,255,.25)}
+.btn{font:600 1rem 'Poppins',sans-serif;border:0;border-radius:999px;padding:14px 26px;margin:8px 6px;color:#fff;background:linear-gradient(135deg,var(--a),var(--b));box-shadow:0 8px 22px rgba(255,92,157,.4);cursor:pointer;transition:transform .35s cubic-bezier(.3,1.6,.5,1);animation:pulse 2.4s infinite}
+.btn:active{transform:scale(.94)}
+.btn.no{background:var(--card);color:var(--ink);box-shadow:none;border:1px solid var(--bd);animation:none}
+@keyframes pulse{50%{box-shadow:0 8px 32px rgba(255,92,157,.7)}}
+#typed,#letterText{white-space:pre-wrap;text-align:left}
+.cursor::after{content:"|";animation:blink 1s infinite}@keyframes blink{50%{opacity:0}}
+.beat{font-size:3rem;animation:beat 1.2s infinite}@keyframes beat{15%{transform:scale(1.3)}30%{transform:scale(1)}45%{transform:scale(1.2)}}
+.prog{font:600 .85rem 'Poppins',sans-serif;opacity:.75;margin-bottom:10px}
+.bar{height:6px;border-radius:9px;background:var(--bd);overflow:hidden;margin-bottom:14px}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--a),var(--b));transition:width .6s}
+#qText{font-size:1.2rem;font-weight:600;min-height:5.5em;display:flex;align-items:center;justify-content:center}
+#resp{min-height:3.2em;font-style:italic;opacity:0;transition:opacity .5s}#resp.on{opacity:1}
+#yes{transition:transform .5s cubic-bezier(.3,1.6,.5,1);margin:8px 18px}
+.qin{animation:qa var(--qa) .8s ease both}
+@keyframes qa1{from{opacity:0;transform:translateX(60px) rotate(4deg)}}@keyframes qa2{from{opacity:0;transform:scale(.6)}}
+@keyframes qa3{from{opacity:0;transform:translateY(-60px)}}@keyframes qa4{from{opacity:0;transform:rotateY(90deg)}}@keyframes qa5{from{opacity:0;transform:translateY(60px) scale(1.2)}}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:34rem;width:100%}
+.rc{min-height:120px;padding:14px 10px;border-radius:22px;background:var(--card);border:1px solid var(--bd);backdrop-filter:blur(12px);cursor:pointer;font:600 .95rem 'Quicksand',sans-serif;color:var(--ink);transition:transform .4s}
+.rc:active{transform:scale(.95)}.rc .ic{font-size:1.8rem;display:block;animation:beat 2s infinite}.rc small{display:block;font-weight:400;margin-top:6px;line-height:1.4}
+.rc.open{background:linear-gradient(135deg,rgba(255,92,157,.25),rgba(179,136,255,.3))}
+.rc:last-child{grid-column:1/-1}
+.env{position:relative;width:min(300px,80vw);height:200px;margin:18px auto;perspective:900px;transition:opacity .8s,transform .8s}
+.env .back{position:absolute;inset:0;background:linear-gradient(135deg,#f9b8d6,#c9b3ff);border-radius:12px;box-shadow:0 18px 40px rgba(179,136,255,.5)}
+.env .front{position:absolute;inset:0;border-radius:12px;background:linear-gradient(135deg,#ffd0e6,#dccbff);clip-path:polygon(0 0,50% 58%,100% 0,100% 100%,0 100%);opacity:.95}
+.env .flap{position:absolute;left:0;right:0;top:0;height:60%;background:linear-gradient(#f7a8cb,#e3b9ff);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform 1s;border-radius:12px 12px 0 0}
+.env.open .flap{transform:rotateX(180deg)}
+.seal{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);font-size:2.2rem;z-index:2;filter:drop-shadow(0 0 10px #ff5c9d);animation:beat 1.6s infinite;transition:opacity .4s}
+.env.open .seal{opacity:0}.env.gone{opacity:0;transform:translateY(60px) scale(.9)}
+#letterWrap{display:none;width:100%;max-width:34rem}
+#letterWrap .card{max-height:62vh;overflow-y:auto;background:rgba(255,255,255,.8);color:#5a2a54;font-size:1.02rem;line-height:1.7}
+:root[data-theme="dark"] #letterWrap .card{background:rgba(40,20,60,.85);color:#ffe9f4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #letterWrap .card{background:rgba(40,20,60,.85);color:#ffe9f4}}
+#music{position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);right:12px;z-index:5;width:44px;height:44px;border-radius:50%;border:1px solid var(--bd);background:var(--card);backdrop-filter:blur(10px);font-size:1.2rem;cursor:pointer}
+.fl{position:absolute;bottom:-40px;animation:up var(--t) linear forwards;font-size:var(--s)}
+@keyframes up{to{transform:translate(var(--dx),-115vh) rotate(var(--r));opacity:0}}
+.amb{position:absolute;top:-40px;animation:fall var(--t) linear infinite;opacity:.7}
+@keyframes fall{to{transform:translate(var(--dx),110vh) rotate(360deg)}}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div id="fx"></div>
+<button id="music" aria-label="Play or pause music">🔇</button>
+
+<main id="app">
+  <section class="screen active" id="s0">
+    <h1 id="hey"></h1>
+    <p id="introP"></p>
+    <button class="btn" data-go="s1">Open My Heart 💗</button>
+  </section>
+
+  <section class="screen" id="s1">
+    <h2>Before You Continue...</h2>
+    <div class="card"><p id="typed"></p><div class="beat">💗</div></div>
+    <button class="btn" id="toQ" style="display:none">There’s Something I Want To Ask You 💕</button>
+  </section>
+
+  <section class="screen" id="s2">
+    <div class="card">
+      <div class="prog" id="prog"></div><div class="bar"><i id="barI"></i></div>
+      <div id="qBox"><div id="qText"></div></div>
+      <div id="resp"></div>
+      <div><button class="btn" id="yes">YES 💗</button><button class="btn no" id="no">NO 🥺</button></div>
+    </div>
+  </section>
+
+  <section class="screen" id="s3">
+    <h2>Do You Know What Makes You So Special?</h2>
+    <p style="margin-top:0">Tap each one 🌸</p>
+    <div class="grid" id="grid"></div>
+    <button class="btn" data-go="s4">Continue 💌</button>
+  </section>
+
+  <section class="screen" id="s4">
+    <h2 id="envTitle">One Last Thing... A Letter From My Heart 💌</h2>
+    <div class="env" id="env"><div class="back"></div><div class="front"></div><div class="flap"></div><div class="seal">💗</div></div>
+    <button class="btn" id="openLetter">Open Your Letter</button>
+    <div id="letterWrap"><div class="card"><div id="letterText"></div></div>
+      <button class="btn" id="toFinal" style="display:none">Continue 💗</button></div>
+  </section>
+
+  <section class="screen" id="s5">
+    <div style="flex:1"></div>
+    <h1>You’re Precious To Me. Always. ❤️</h1>
+    <p>I cannot promise to be perfect, but I can promise to keep learning, listening, respecting, and working on myself.</p>
+    <p id="hugMsg" style="font-weight:600;min-height:1.6em"></p>
+    <button class="btn" id="hug">Send You A Virtual Hug 🤗</button>
+  </section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ============ EDIT ME: personalise everything here ============ */
+const CONFIG = {
+  nickname: "Beautiful",
+  signOff: "Yours",
+  // Optional: say, in your own words, exactly what you’re sorry for. Shown in section two.
+  personalNote: "",
+  // Optional: name of an audio file saved next to this html file, e.g. "song.mp3". Leave empty for the built-in soft music.
+  musicFile: "",
+  letter: `My Dearest Love,
+
+I don’t know if these words will be enough, but I want to start by saying that I’m genuinely sorry.
+
+I know I made a mistake. I know that I disrespected you in a way I never should have, and honestly, you didn’t deserve that from me.
+
+You have always been such a sweet, caring, and beautiful person. You deserve someone who listens to you, understands you, respects your feelings, and makes you feel valued.
+
+I’m not going to make excuses for what I did. Being upset, frustrated, or having a bad moment doesn’t give me the right to hurt you or disrespect you.
+
+I wish I could go back and handle things differently, but I cannot change what happened. What I can do is learn from it and make sure my actions speak louder than my words.
+
+I don’t expect you to forget everything instantly or forgive me just because I wrote this letter.
+
+I just want you to know that I recognize my mistake, I regret hurting you, and I genuinely want to become a better person.
+
+Thank you for being the sweet, caring person you are.
+
+I’m sorry, sweetheart. You deserved better from me, and I want to do better.
+
+With all my love,
+{sign} ❤️`,
+  questions: [
+    ["Do you know that you deserve to be treated with love, kindness, and respect every single day?", "You really do. Every single day. 💗"],
+    ["Do you know how special and important you are to me?", "You mean the world to me. 🌸"],
+    ["Do you believe that people can make mistakes but also genuinely learn and become better?", "Thank you for believing in growth. 🌱"],
+    ["Would you allow me the chance to show you through my actions that I can do better?", "I promise to earn it, one day at a time. ✨"],
+    ["Can I sincerely apologize for hurting you and making you feel disrespected?", "I’m so sorry, sweetheart. Truly. 💞"]
+  ],
+  noReply: "That’s okay, sweetheart. I understand that feelings cannot be changed with just a few words. ❤️",
+  reasons: [
+    ["🌸","Your kindness","The way you treat people makes the world softer."],
+    ["💖","Your beautiful heart","It’s the most honest thing I’ve ever known."],
+    ["🤗","The way you care","You notice the little things nobody else does."],
+    ["🦋","Your patience","Even when I didn’t deserve it."],
+    ["😊","Your beautiful smile","It can fix my whole day."],
+    ["🌷","The happiness you bring","You make my life brighter just by being in it."],
+    ["✨","You make ordinary moments special","Even a quiet evening feels like magic with you."]
+  ]
+};
+/* =============================================================== */
+
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+const rnd=(a,b)=>a+Math.random()*(b-a);
+
+/* ---------- Sound (WebAudio, only after a tap) ---------- */
+let AC, padOn=false, padNodes=[];
+const ac=()=>AC||(AC=new (window.AudioContext||window.webkitAudioContext)());
+function blip(f=660,d=.15){try{const c=ac(),o=c.createOscillator(),g=c.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(.08,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+d);o.connect(g).connect(c.destination);o.start();o.stop(c.currentTime+d)}catch(e){}}
+let song;
+function toggleMusic(){
+  if(CONFIG.musicFile){song=song||Object.assign(new Audio(CONFIG.musicFile),{loop:true,volume:.6});if(song.paused){song.play().catch(()=>{});$('#music').textContent='🎵'}else{song.pause();$('#music').textContent='🔇'}return}
+  try{const c=ac();
+  if(!padOn){const g=c.createGain();g.gain.value=0;g.gain.linearRampToValueAtTime(.05,c.currentTime+2);g.connect(c.destination);
+    [261.6,329.6,392,523.3].forEach((f,i)=>{const o=c.createOscillator();o.type='sine';o.frequency.value=f;const l=c.createOscillator(),lg=c.createGain();l.frequency.value=.15+i*.05;lg.gain.value=3;l.connect(lg).connect(o.frequency);o.connect(g);o.start();l.start();padNodes.push(o,l)});
+    padNodes.push(g);padOn=true;$('#music').textContent='🎵';}
+  else{padNodes.forEach(n=>{try{n.stop?n.stop():n.disconnect()}catch(e){}});padNodes=[];padOn=false;$('#music').textContent='🔇';}}catch(e){}
+}
+$('#music').onclick=toggleMusic;
+document.addEventListener('click',e=>{if(e.target.closest('.btn,.rc'))blip(520+Math.random()*200)});
+
+/* ---------- Floating emoji ---------- */
+function floaters(n,em=['💗','💖','✨','🌸'],x0,y0){
+  const fx=$('#fx');
+  for(let i=0;i<n;i++){const s=document.createElement('span');s.className='fl';s.textContent=em[i%em.length];
+    s.style.cssText=`left:${x0!=null?x0+rnd(-30,30):rnd(0,100)+'vw'};${y0!=null?'bottom:auto;top:'+y0+'px;':''}--t:${rnd(2.5,4.5)}s;--s:${rnd(18,34)}px;--dx:${rnd(-60,60)}px;--r:${rnd(-90,90)}deg`;
+    if(x0!=null)s.style.left=x0+rnd(-30,30)+'px';
+    fx.appendChild(s);setTimeout(()=>s.remove(),4600)}
+}
+(function ambient(){const fx=$('#fx'),em=['🌸','🦋','✨','⭐','🌷','🦋'];
+  em.forEach((e,i)=>{const s=document.createElement('span');s.className='amb';s.textContent=e;s.style.cssText=`left:${rnd(0,95)}vw;font-size:${rnd(16,26)}px;--t:${rnd(14,26)}s;--dx:${rnd(-80,80)}px;animation-delay:${-rnd(0,20)}s`;fx.appendChild(s)})})();
+const burstAt=(el)=>{const r=el.getBoundingClientRect();floaters(14,['💗','💖','✨','💕'],r.left+r.width/2,r.top)};
+
+/* ---------- Typing ---------- */
+function type(el,text,speed,done){el.textContent='';el.classList.add('cursor');let i=0;
+  (function t(){el.textContent=text.slice(0,++i);if(i<text.length)setTimeout(t,speed);else{el.classList.remove('cursor');done&&done()}})()}
+
+/* ---------- Three.js scene ---------- */
+const canvas=$('#bg'),renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+const scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(50,1,.1,100);cam.position.z=6;
+scene.add(new THREE.AmbientLight(0xffd6ec,.7));
+const L1=new THREE.PointLight(0xff7ab8,1.6,30);L1.position.set(3,3,5);scene.add(L1);
+const L2=new THREE.PointLight(0xb388ff,1.4,30);L2.position.set(-4,-2,4);scene.add(L2);
+function heartGeo(){const x=0,y=0,s=new THREE.Shape();
+  s.moveTo(x+.5,y+.5);s.bezierCurveTo(x+.5,y+.5,x+.4,y,x,y);s.bezierCurveTo(x-.6,y,x-.6,y+.7,x-.6,y+.7);
+  s.bezierCurveTo(x-.6,y+1.1,x-.3,y+1.54,x+.5,y+1.9);s.bezierCurveTo(x+1.2,y+1.54,x+1.6,y+1.1,x+1.6,y+.7);
+  s.bezierCurveTo(x+1.6,y+.7,x+1.6,y,x+1,y);s.bezierCurveTo(x+.7,y,x+.5,y+.5,x+.5,y+.5);
+  const g=new THREE.ExtrudeGeometry(s,{depth:.45,bevelEnabled:true,bevelSize:.14,bevelThickness:.14,bevelSegments:8,curveSegments:24});g.center();return g}
+const heart=new THREE.Mesh(heartGeo(),new THREE.MeshStandardMaterial({color:0xff5c9d,emissive:0x8a1f55,emissiveIntensity:.5,roughness:.25,metalness:.2}));
+heart.rotation.z=Math.PI;const hg=new THREE.Group();hg.add(heart);scene.add(hg);
+const N=260,pp=new Float32Array(N*3);for(let i=0;i<N*3;i++)pp[i]=rnd(-6,6);
+const pg=new THREE.BufferGeometry();pg.setAttribute('position',new THREE.BufferAttribute(pp,3));
+const pts=new THREE.Points(pg,new THREE.PointsMaterial({color:0xffb3de,size:.07,transparent:true,opacity:.85}));scene.add(pts);
+const stars=new THREE.Points(pg.clone(),new THREE.PointsMaterial({color:0xd9c2ff,size:.12,transparent:true,opacity:.7}));stars.scale.set(1.2,1.2,1.2);scene.add(stars);
+const mini=[];for(let i=0;i<8;i++){const m=new THREE.Mesh(heartGeo(),new THREE.MeshStandardMaterial({color:i%2?0xc9a8ff:0xff9ccc,roughness:.3}));m.scale.setScalar(.14);m.rotation.z=Math.PI;m.userData={a:rnd(0,6.28),r:rnd(2.2,3.6),y:rnd(-2.5,2.5),sp:rnd(.2,.5)};scene.add(m);mini.push(m)}
+let target={y:1.5,s:1.0},fw=[];
+function resize(){const w=innerWidth,h=innerHeight;renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix()}
+addEventListener('resize',resize);resize();
+function firework(){const n=70,pos=new Float32Array(n*3),vel=[],c=new THREE.Color().setHSL(rnd(.82,.97),1,.7),ox=rnd(-2.5,2.5),oy=rnd(.5,3);
+  for(let i=0;i<n;i++){pos.set([ox,oy,rnd(-1,1)],i*3);const a=rnd(0,6.28),b=rnd(0,3.14),sp=rnd(.02,.06);vel.push([Math.cos(a)*Math.sin(b)*sp,Math.cos(b)*sp,Math.sin(a)*Math.sin(b)*sp])}
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  const p=new THREE.Points(g,new THREE.PointsMaterial({color:c,size:.1,transparent:true}));scene.add(p);fw.push({p,vel,life:1})}
+let t0=performance.now();
+function loop(now){requestAnimationFrame(loop);const t=(now-t0)/1000,k=Math.min(1,cam.aspect*1.5);
+  hg.position.y+=(target.y-hg.position.y)*.05;const sc=target.s*k;hg.scale.setScalar(hg.scale.x+(sc-hg.scale.x)*.05);
+  hg.rotation.y=t*.6;hg.scale.y=hg.scale.x*(1+Math.sin(t*3)*.03);
+  pts.rotation.y=t*.03;stars.rotation.y=-t*.02;stars.material.opacity=.5+Math.sin(t*2)*.25;
+  mini.forEach(m=>{const u=m.userData,a=u.a+t*u.sp;m.position.set(Math.cos(a)*u.r,u.y+Math.sin(t+u.a)*.3,Math.sin(a)*u.r-1);m.rotation.y=t})
+  fw.forEach(f=>{const a=f.p.geometry.attributes.position;f.vel.forEach((v,i)=>{a.array[i*3]+=v[0];a.array[i*3+1]+=v[1]-.0008*(1-f.life);a.array[i*3+2]+=v[2]});a.needsUpdate=true;f.life-=.012;f.p.material.opacity=Math.max(f.life,0);if(f.life<=0){scene.remove(f.p);f.p.geometry.dispose()}});
+  fw=fw.filter(f=>f.life>0);renderer.render(scene,cam)}
+requestAnimationFrame(loop);
+let fwTimer;
+
+/* ---------- Navigation ---------- */
+const targets={s0:{y:1.5,s:1},s1:{y:2.7,s:.35},s2:{y:2.9,s:.3},s3:{y:2.9,s:.3},s4:{y:2.9,s:.3},s5:{y:1.2,s:1.4}};
+function show(id){$$('.screen').forEach(s=>s.classList.toggle('active',s.id===id));$('#'+id).scrollTop=0;target=targets[id];
+  clearInterval(fwTimer);
+  if(id==='s1')startMessage();
+  if(id==='s2')startQuestions();
+  if(id==='s5'){firework();fwTimer=setInterval(firework,900)}
+  floaters(8)}
+$$('[data-go]').forEach(b=>b.onclick=()=>show(b.dataset.go));
+
+/* ---------- Section 1 ---------- */
+$('#hey').textContent=`Hey ${CONFIG.nickname}! ❤️`;
+$('#introP').textContent=`I made something special for you. I know I haven’t been perfect, and there are things I wish I could take back. But before anything else, I want you to know how much you mean to me.`;
+let msgDone=false;
+function startMessage(){if(msgDone)return;msgDone=true;
+  let txt=`I know I made a mistake, and I know that my actions may have hurt you. You never deserved to feel disrespected, especially by someone who is supposed to care about you.\n\nI’m not here to make excuses or pretend that nothing happened.\n\nI just want you to know that I realize where I went wrong, and I’m genuinely sorry.`;
+  if(CONFIG.personalNote)txt+=`\n\n${CONFIG.personalNote}`;
+  type($('#typed'),txt,28,()=>{$('#toQ').style.display='inline-block'})}
+$('#toQ').onclick=()=>show('s2');
+
+/* ---------- Section 2: questions ---------- */
+let qi=0,locked=false;
+const Q=CONFIG.questions;
+function startQuestions(){qi=0;renderQ()}
+function renderQ(){locked=false;
+  $('#prog').textContent=`Question ${qi+1} of ${Q.length}`;$('#barI').style.width=(qi/Q.length*100)+'%';
+  const box=$('#qBox');box.style.setProperty('--qa','qa'+(qi+1));box.classList.remove('qin');void box.offsetWidth;box.classList.add('qin');
+  $('#qText').textContent=Q[qi][0];$('#resp').classList.remove('on');$('#resp').textContent='';
+  $('#yes').style.transform='scale(1)';$('#yes').disabled=false}
+function advance(){qi++;if(qi>=Q.length){$('#barI').style.width='100%';show('s3')}else renderQ()}
+$('#yes').onclick=e=>{if(locked)return;locked=true;burstAt(e.currentTarget);floaters(16,['💗','✨','💖','🌸']);
+  $('#resp').textContent=Q[qi][1];$('#resp').classList.add('on');setTimeout(advance,1700)};
+let noCount=0;
+$('#no').onclick=()=>{if(locked)return;noCount++;
+  $('#resp').textContent=CONFIG.noReply;$('#resp').classList.add('on');
+  $('#yes').style.transform=`scale(${Math.min(1.1+noCount*.03,1.2)})`;
+  floaters(6,['🥺','💧','🤍'])};
+
+/* ---------- Section 3: reasons ---------- */
+$('#grid').innerHTML=CONFIG.reasons.map(r=>`<button class="rc"><span class="ic">${r[0]}</span>${r[1]}<small></small></button>`).join('');
+$$('.rc').forEach((c,i)=>c.onclick=()=>{c.classList.add('open');c.querySelector('small').textContent=CONFIG.reasons[i][2];burstAt(c)});
+
+/* ---------- Section 4: letter ---------- */
+$('#openLetter').onclick=function(){this.style.display='none';$('#envTitle').style.display='none';$('#env').classList.add('open');floaters(20,['🌹','🌸','💗']);
+  setTimeout(()=>{$('#env').classList.add('gone')},1300);
+  setTimeout(()=>{$('#env').style.display='none';$('#letterWrap').style.display='block';
+    type($('#letterText'),CONFIG.letter.replace('{sign}',CONFIG.signOff),32,()=>{$('#toFinal').style.display='inline-block'})},2100)};
+$('#toFinal').onclick=()=>show('s5');
+
+/* ---------- Final ---------- */
+$('#hug').onclick=function(){$('#hugMsg').textContent='Sending you the biggest hug ever! ❤️';
+  burstAt(this);for(let i=0;i<4;i++)setTimeout(()=>floaters(18,['💗','💖','💕','🤗','🌹']),i*300);
+  for(let i=0;i<5;i++)setTimeout(firework,i*150);blip(330,.4)};
+</script>
+</body>
+</html>
